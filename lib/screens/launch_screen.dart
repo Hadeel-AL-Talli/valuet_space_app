@@ -12,15 +12,19 @@ class _LaunchScreenState extends State<LaunchScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 5), () {
-      Navigator.pushReplacementNamed(context, '/passwords_sreen');
+      Navigator.pushReplacementNamed(context, '/on_boarding');
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
+      backgroundColor: Colors.blue.shade500,
+            
+         body: 
+           Center(
       child: Image.asset('images/logo.png'),
-    ));
+    ),
+         );
   }
 }

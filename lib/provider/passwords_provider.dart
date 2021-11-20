@@ -37,13 +37,13 @@ class PasswordsProvider extends ChangeNotifier {
     return deleted;
   }
 
-Future<bool> update(Passwords contact) async{
-    bool updated = await _passwordDBController.update(contact);
+Future<bool> update(Passwords password) async{
+    bool updated = await _passwordDBController.update(password);
     if(updated){
       
-      int index = passwords.indexWhere((element) => element.id == contact.id);
+      int index = passwords.indexWhere((element) => element.id == password.id);
       if(index != -1) {
-        passwords[index] = contact;
+        passwords[index] = password;
         notifyListeners();
       }
     }
