@@ -6,19 +6,16 @@ import 'package:valuet_space_app/models/passwordmodel.dart';
 import 'package:valuet_space_app/provider/passwords_provider.dart';
 import 'package:valuet_space_app/widgets/text_field.dart';
 
-class AddPasswordScreen extends StatefulWidget {
-  AddPasswordScreen({Key? key, this.title, this.loginAccount, this.password , this.website}) : super(key: key);
-    String? title;
-   String? loginAccount;
-   String? password;
-   String? website;
-
+class UpdatePasswordScreen extends StatefulWidget {
+  UpdatePasswordScreen({Key? key, required this.password}) : super(key: key);
+  Passwords password;
 
   @override
-  _AddPasswordScreenState createState() => _AddPasswordScreenState();
+  _UpdatePasswordScreenState createState() => _UpdatePasswordScreenState();
 }
 
-class _AddPasswordScreenState extends State<AddPasswordScreen> with Helpers {
+class _UpdatePasswordScreenState extends State<UpdatePasswordScreen>
+    with Helpers {
   late TextEditingController _titleTextController;
   late TextEditingController _loginAccountTextController;
   late TextEditingController _passwordTextController;
@@ -28,10 +25,11 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> with Helpers {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _titleTextController = TextEditingController();
-    _loginAccountTextController = TextEditingController();
-    _passwordTextController = TextEditingController();
-    _websiteTextController = TextEditingController();
+    _titleTextController = TextEditingController(text: widget.password.title);
+    _loginAccountTextController =
+        TextEditingController(text: widget.password.loginAccount);
+    _passwordTextController = TextEditingController(text: widget.password.password);
+    _websiteTextController = TextEditingController(text: widget.password.website);
   }
 
   @override
@@ -58,7 +56,7 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> with Helpers {
             },
             child: Icon(Icons.arrow_back_ios, color: Colors.black)),
         title: const Text(
-          'New Password',
+          'Update Password',
           style: TextStyle(
               color: Colors.black,
               fontFamily: 'Poppins',
@@ -119,7 +117,7 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> with Helpers {
               const SizedBox(height: 15),
               ElevatedButton(
                 onPressed: () async {
-                  await performCreate();
+                  await performUpdate();
                 },
                 child: const Text(
                   'Save',
@@ -140,9 +138,9 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> with Helpers {
     );
   }
 
-  Future<void> performCreate() async {
+  Future<void> performUpdate() async {
     if (checkData()) {
-      await create();
+      await update();
     }
   }
 
@@ -159,28 +157,21 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> with Helpers {
     return false;
   }
 
-  Future<void> create() async {
-    bool created = await Provider.of<PasswordsProvider>(context, listen: false)
-        .create(password);
-    if (created) clear();
-    String message = created ? 'Created successfully' : 'Create failed';
-    showSnackBar(context: context, message: message, error: !created);
+  Future<void> update() async {
+    bool updated = await Provider.of<PasswordsProvider>(context, listen: false)
+        .update(password);
+    String message = updated ? 'Updated successfully' : 'Update failed';
+    showSnackBar(context: context, message: message, error: !updated);
+    if (updated) Navigator.pop(context);
   }
 
   Passwords get password {
-    Passwords c = Passwords();
+    Passwords c = widget.password;
     c.title = _titleTextController.text;
     c.loginAccount = _loginAccountTextController.text;
     c.password = _passwordTextController.text;
     c.website = _websiteTextController.text;
 
     return c;
-  }
-
-  void clear() {
-    _titleTextController.text = '';
-    _loginAccountTextController.text = '';
-    _passwordTextController.text = '';
-    _websiteTextController.text = '';
   }
 }

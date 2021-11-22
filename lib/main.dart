@@ -8,6 +8,7 @@ import 'package:valuet_space_app/screens/add_password_screen.dart';
 import 'package:valuet_space_app/screens/launch_screen.dart';
 import 'package:valuet_space_app/screens/on_boarding.dart';
 import 'package:valuet_space_app/screens/passwordsscreen.dart';
+import 'package:valuet_space_app/screens/update_password.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,8 +39,11 @@ class _MyAppState extends State<MyApp> {
           '/on_boarding_screen': (context) => OnBoarding(),
           '/passwords_sreen': (context) => PasswordsScreen(),
           '/addPassword_screen': (context) => AddPasswordScreen(),
+         // '/updatepassword_screen':(context)=> UpdatePasswordScreen(),
           '/about_screen': (context) => AboutScreen(),
-          '/on_boarding': (context) => OnBoarding()
+          '/on_boarding': (context) => OnBoarding(),
+
+
         },
         
       ),

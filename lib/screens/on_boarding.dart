@@ -38,7 +38,7 @@ class _OnBoardingState extends State<OnBoarding> {
               visible: _currentpage < 2,
               replacement: TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/passwords_sreen');
+                  Navigator.pushReplacementNamed(context, '/passwords_sreen');
                 },
                 child: Text('Start',
                     style: TextStyle(fontSize: 18, color: Colors.blue)),

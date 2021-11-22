@@ -29,7 +29,7 @@ class AboutScreen extends StatelessWidget {
               )),
         ),
         body: Container(
-          margin: EdgeInsets.all(20),
+          margin: const EdgeInsets.all(20),
           height: 500,
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(20)),
@@ -37,22 +37,27 @@ class AboutScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
               Text(
-                
                   'The First Project   in eLancer training Developed by Hadeel Al-Talli , supervised by Eng.Moemen',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.bold,
                       fontSize: 22)),
-                      SizedBox(height:20),
+              SizedBox(height: 20),
               Text('Skills that used in this app',
                   style: TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.bold,
                       fontSize: 22)),
-                      SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Text(
-                  ' Database SQLite \n add fonts and images to app \n make the code reusable \n use provider state managment \n launch and on boarding screens ', style: TextStyle(fontFamily: 'Poppins',),)
+                ' Database SQLite \n add fonts and images to app \n make the code reusable \n use provider state managment \n launch and on boarding screens \n Use url launcher to openApp   ',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                ),
+              )
             ],
           ),
         ));

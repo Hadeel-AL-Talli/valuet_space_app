@@ -37,7 +37,7 @@ class PasswordsProvider extends ChangeNotifier {
     return deleted;
   }
 
-Future<bool> update(Passwords password) async{
+Future<bool> update(Passwords password, ) async{
     bool updated = await _passwordDBController.update(password);
     if(updated){
       

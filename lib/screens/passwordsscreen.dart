@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:valuet_space_app/helpers/helpers.dart';
 import 'package:valuet_space_app/provider/passwords_provider.dart';
+import 'package:valuet_space_app/screens/add_password_screen.dart';
+import 'package:valuet_space_app/screens/update_password.dart';
 import 'package:valuet_space_app/widgets/flip_card.dart';
 
 class PasswordsScreen extends StatefulWidget {
@@ -22,7 +25,7 @@ class _PasswordsScreenState extends State<PasswordsScreen> with Helpers {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: Color(0xF8F9FB),
+        backgroundColor: Colors.white,
         appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.transparent,
@@ -39,7 +42,7 @@ class _PasswordsScreenState extends State<PasswordsScreen> with Helpers {
                   onPressed: () {
                     Navigator.pushNamed(context, '/about_screen');
                   },
-                  icon: Icon(Icons.info_outline),
+                  icon: const Icon(Icons.info_outline),
                   color: Colors.black),
               IconButton(
                   onPressed: () {
@@ -56,26 +59,79 @@ class _PasswordsScreenState extends State<PasswordsScreen> with Helpers {
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
-                      SizedBox(
-                        height: 20,
+                      const SizedBox(
+                        height: 10,
                       ),
-                      Stack(
-                        children: [
-                          FlipCardWidget(
-                              fronttext: value.passwords[index].title,
-                              backtext: 'Password :' +
-                                  value.passwords[index].password),
-                          GestureDetector(
-                              onTap: () async {
-                                await delete(value.passwords[index].id);
-                              },
-                              child: Icon(
-                                Icons.cancel,
-                                size: 30,
-                                color: Colors.black45,
-                              )),
-                        ],
-                      )
+                      Container(
+                        margin: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: LinearGradient(colors: [
+                              Colors.blue.shade400,
+                              Colors.blue.shade200,
+                            ])),
+                        child: Column(
+                          children: [
+                            Stack(
+                              children: [
+                                FlipCardWidget(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                UpdatePasswordScreen(
+                                                    password:
+                                                        value.passwords[index]),
+                                          ));
+                                    },
+                                    fronttext: value.passwords[index].title,
+                                    backtext: 'Password :' +
+                                        value.passwords[index].password),
+                                GestureDetector(
+                                    onTap: () async {
+                                      await delete(value.passwords[index].id);
+                                    },
+                                    child: const Icon(
+                                      Icons.cancel,
+                                      size: 30,
+                                      color: Colors.white,
+                                    )),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5.0, horizontal: 20),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  String _url = value.passwords[index].website;
+
+                                  await canLaunch('https://' + '$_url')
+                                      ? await launch('https://' + '$_url')
+                                      : throw 'Could not launch ';
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: const [
+                                    Text('Open App',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Poppins',
+                                          fontSize: 18,
+                                        )),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Colors.white,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ],
                   );
                 });
@@ -84,9 +140,9 @@ class _PasswordsScreenState extends State<PasswordsScreen> with Helpers {
                 child: Column(
               children: [
                 SizedBox(height: 40),
-                Image.asset('images/nopasswords.png'),
+                Image.asset('images/nodata.png'),
                 const SizedBox(
-                  height: 10,
+                  height: 30,
                 ),
                 const Text(
                   'No Passwords',
@@ -106,14 +162,14 @@ class _PasswordsScreenState extends State<PasswordsScreen> with Helpers {
                       fontSize: 14,
                       color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/addPassword_screen');
                     },
-                    child: Text(
+                    child: const Text(
                       'Create',
                       style: TextStyle(
                           color: Colors.white,
@@ -121,7 +177,7 @@ class _PasswordsScreenState extends State<PasswordsScreen> with Helpers {
                           fontWeight: FontWeight.bold),
                     ),
                     style: ElevatedButton.styleFrom(
-                        minimumSize: Size(0, 50),
+                        minimumSize: const Size(0, 50),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25))))
               ],
